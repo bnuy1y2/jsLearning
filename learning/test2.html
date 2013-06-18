@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> New Document </title>
+  <meta name="Generator" content="EditPlus">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+ </head>
+
+ <body>
+  <script>
+
+	window.onerror=function(e){
+		console.log('window catch error');
+	};
+	var customizedErrorMap={
+		MyBizError: function(message, optionalObj){
+			this.name='MyBizError';
+			this.message=message;
+			this.optionalObj=optionalObj;
+			//alert(optionalObj.data);
+		}
+	};
+
+	customizedErrorMap.MyBizError.prototype.optionalObj='';
+	customizedErrorMap.MyBizError.prototype=new Error();
+
+
+
+
+
+	function f1(){
+		if(window.fun1==null){
+			var data=100;
+			throw new customizedErrorMap.MyBizError('it is null', {data: data} );
+			alert(1);
+		}
+		//window.fun1();
+	}
+
+	function f2(){
+		try{
+			f1();
+		}
+		catch(e){
+			if(e instanceof customizedErrorMap.MyBizError){
+				console.log(e);
+				console.log(e.optionalObj.data);
+			}
+
+		}
+		//f1();
+	}
+	f2();
+  </script>
+ </body>
+</html>
